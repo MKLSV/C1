@@ -13,6 +13,20 @@ AI-собеседник, который через интервью, навод�
 рост). Что ещё собрать — [`plan/still-to-collect.md`](plan/still-to-collect.md).
 Открытые вопросы — [`plan/open-questions.md`](plan/open-questions.md).
 
+🚀 **Рабочий MVP уже собран** (Next.js + Claude API). Запуск:
+
+```bash
+npm install
+cp .env.example .env.local   # вписать ANTHROPIC_API_KEY
+npm run dev                  # http://localhost:3000
+```
+
+Что внутри MVP: чат с двумя режимами (быстрый/глубокий), бот на «ты» по сценарию,
+извлечение профиля, матчинг по каталогу из 24 ролей, итоговые карточки профессий
+с первым шагом, перехват кризисных сигналов. Код: `app/` (UI+API), `lib/` (движок),
+`data/catalog.json` (каталог). Сессии на MVP — in-memory; в проде заменяются на
+Supabase (схема в `migrations/`).
+
 ---
 
 ## Карта документов
