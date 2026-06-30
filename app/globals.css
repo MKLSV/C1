@@ -108,3 +108,21 @@ html, body {
 
 .footnote { color: var(--muted); font-size: 12px; text-align: center; padding: 12px 0; }
 .consent { color: var(--muted); font-size: 12px; margin-top: 12px; line-height: 1.4; }
+.consent-row {
+  display: flex; gap: 10px; align-items: flex-start;
+  color: var(--muted); font-size: 13px; margin-top: 16px; line-height: 1.45; cursor: pointer;
+}
+.consent-row input { margin-top: 3px; }
+.consent-row a { color: var(--accent); }
+.delete-btn {
+  align-self: center; margin: 8px 0 4px; background: transparent; color: var(--muted);
+  border: 1px solid #3a445f; border-radius: 10px;
+  padding: 8px 14px; font: inherit; cursor: pointer;
+}
+.delete-btn:hover { color: #e88; border-color: #c75c5c; }
+
+.legal { max-width: 720px; margin: 0 auto; padding: 24px 16px; line-height: 1.6; }
+.legal h1 { font-size: 22px; }
+.legal h2 { font-size: 17px; margin-top: 24px; }
+.legal a { color: var(--accent); }
+.legal .muted { color: var(--muted); font-size: 13px; }

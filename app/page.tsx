@@ -28,6 +28,8 @@ export default function Home() {
   const [busy, setBusy] = useState(false);
   const [finalized, setFinalized] = useState(false);
   const [results, setResults] = useState<Occupation[] | null>(null);
+  const [consent, setConsent] = useState(false);
+  const [deleted, setDeleted] = useState(false);
   const chatRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -35,12 +37,13 @@ export default function Home() {
   }, [messages, busy, results]);
 
   async function start(m: Mode) {
+    if (!consent) return;
     setBusy(true);
     try {
       const r = await fetch("/api/session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ mode: m }),
+        body: JSON.stringify({ mode: m, consent: true }),
       });
       const data = await r.json();
       setSessionId(data.session_id);
@@ -78,6 +81,14 @@ export default function Home() {
     }
   }
 
+  async function deleteData() {
+    if (!sessionId) return;
+    await fetch(`/api/session/${sessionId}`, { method: "DELETE" });
+    setDeleted(true);
+    setMessages([]);
+    setResults(null);
+  }
+
   function onKey(e: React.KeyboardEvent<HTMLTextAreaElement>) {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -103,19 +114,23 @@ export default function Home() {
             плюс, но не обязателен. Выбери, как хочешь поговорить:
           </p>
           <div className="modes">
-            <button className="mode-btn" disabled={busy} onClick={() => start("quick")}>
+            <button className="mode-btn" disabled={busy || !consent} onClick={() => start("quick")}>
               <b>⚡ Быстрый разговор · 5–7 минут</b>
               <span>7–10 вопросов, быстрый ориентир по профессиям</span>
             </button>
-            <button className="mode-btn" disabled={busy} onClick={() => start("deep")}>
+            <button className="mode-btn" disabled={busy || !consent} onClick={() => start("deep")}>
               <b>🧭 Глубокий разбор · 20–30 минут</b>
               <span>Подробно про интересы, навыки и ценности — точнее результат</span>
             </button>
           </div>
-          <p className="consent">
-            Начиная разговор, ты соглашаешься на обработку ответов для подбора
-            рекомендаций. Это поддержка в выборе, а не гарантия заработка.
-          </p>
+          <label className="consent-row">
+            <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} />
+            <span>
+              Соглашаюсь на обработку моих ответов для подбора рекомендаций. Это
+              поддержка в выборе, а не гарантия заработка. Подробнее —{" "}
+              <a href="/privacy" target="_blank" rel="noopener noreferrer">политика конфиденциальности</a>.
+            </span>
+          </label>
         </div>
       ) : (
         <>
@@ -157,6 +172,16 @@ export default function Home() {
               </div>
             )}
           </div>
+
+          {deleted && (
+            <div className="msg bot">Данные этой сессии удалены. Спасибо, что заглянул(а)!</div>
+          )}
+
+          {finalized && !deleted && (
+            <button className="delete-btn" onClick={deleteData}>
+              Удалить мои данные
+            </button>
+          )}
 
           {!finalized && (
             <div className="composer">

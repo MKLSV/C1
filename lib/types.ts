@@ -117,6 +117,12 @@ export interface ChatMessage {
   content: string;
 }
 
+export interface ConsentRecord {
+  accepted: boolean;
+  version: string;
+  at: string;
+}
+
 export interface Session {
   id: string;
   mode: DialogueMode;
@@ -125,6 +131,8 @@ export interface Session {
   messages: ChatMessage[];
   lastCatalogQuery?: CatalogQuery | null;
   finalized: boolean;
+  consent: ConsentRecord;
+  createdAt: string;
 }
 
 export function emptyProfile(): UserProfile {

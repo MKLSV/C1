@@ -20,7 +20,7 @@
 | 2 | Ядро диалога (MVP) | Рабочий бот: чат + промпт + извлечение профиля | 🟢 движок собран (ты, режимы, safety) | [phase-2-dialogue-core.md](phase-2-dialogue-core.md) |
 | 3 | Матчинг и результат | Подбор профессий + итоговый отчёт | 🟢 matcher + карточки готовы | [phase-3-matching-results.md](phase-3-matching-results.md) |
 | 4 | Веб-интерфейс и UX | Чат-интерфейс, карточки результата, лендинг | 🟡 базовый чат + результат готовы | [phase-4-web-ux.md](phase-4-web-ux.md) |
-| 5 | Аккаунты и приватность | Auth, согласие на ПДн, политика, хранение | 🟡 базовое согласие в UI; Auth/удаление ⏳ | [phase-5-accounts-privacy.md](phase-5-accounts-privacy.md) |
+| 5 | Аккаунты и приватность | Auth, согласие на ПДн, политика, хранение | 🟢 согласие+гейт, политика, удаление данных; Auth ⏳ (Supabase) | [phase-5-accounts-privacy.md](phase-5-accounts-privacy.md) |
 | 6 | Тестирование и калибровка | Качество диалога, матчинга, метрики | ⬜ | [phase-6-testing-calibration.md](phase-6-testing-calibration.md) |
 | 7 | Запуск и монетизация | Деплой, платежи, пилот | ⬜ | [phase-7-launch-monetization.md](phase-7-launch-monetization.md) |
 | 8 | Рост и развитие | Аналитика, новые фичи, масштаб | ⬜ | [phase-8-growth.md](phase-8-growth.md) |
