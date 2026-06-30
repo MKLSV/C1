@@ -1,0 +1,178 @@
+-- Стартовый каталог профессий для MVP: 24 КОНКРЕТНЫЕ роли по всем типам RIASEC,
+-- наём И своё дело. Зарплаты в RUB/мес — ОРИЕНТИРОВОЧНЫЕ, требуют сверки с
+-- hh.ru/Avito перед продом (хранить с source/updated_at). См. docs/data-sourcing.md
+--
+-- Примечание: riasec_scores 0-100; employment_modes/work_context — массивы.
+-- Доход добавляется компактно через income_profiles одним проходом ниже.
+
+insert into occupations
+  (title, slug, summary, day_in_life, granularity, riasec_code, riasec_scores,
+   klimov_type, employment_modes, work_context, demand_level)
+values
+-- R — Realistic
+('Мастер по реставрации мебели','furniture-restorer',
+ 'Восстанавливает старую мебель: шлифовка, ремонт, покрытие.',
+ 'В мастерской разбирает комод, чинит каркас, шлифует, покрывает маслом; вечером отвечает клиентам в соцсетях.',
+ 'specialization','RAC','{"R":90,"I":30,"A":60,"S":20,"E":40,"C":40}','tech',
+ '{freelance,business,hybrid}','{hands,solo}','medium'),
+('Инженер по контролю качества (пищевое производство)','qa-engineer-food',
+ 'Следит за качеством и безопасностью продукции на производстве.',
+ 'Берёт пробы на линии, сверяет с нормами, оформляет протоколы, общается с технологами.',
+ 'specialization','RIC','{"R":70,"I":70,"A":10,"S":30,"E":30,"C":80}','tech',
+ '{employee}','{hands,team,office}','high'),
+('Электрик-частник по умному дому','smarthome-electrician',
+ 'Монтаж электрики и систем умного дома в квартирах и домах.',
+ 'Выезжает на объект, ставит щиток и датчики, настраивает сценарии, консультирует заказчика.',
+ 'specialization','RIE','{"R":85,"I":50,"A":20,"S":30,"E":55,"C":45}','tech',
+ '{freelance,business}','{hands,with_people}','high'),
+
+-- I — Investigative
+('Аналитик данных (продуктовая аналитика)','product-data-analyst',
+ 'Анализирует поведение пользователей и метрики продукта.',
+ 'Пишет SQL-запросы, строит дашборды, ищет причины падения метрики, защищает выводы команде.',
+ 'specialization','ICA','{"R":20,"I":90,"A":30,"S":30,"E":40,"C":70}','sign',
+ '{employee,freelance}','{remote,team}','high'),
+('Инженер по машинному обучению','ml-engineer',
+ 'Создаёт и внедряет модели машинного обучения.',
+ 'Готовит данные, обучает модель, оценивает качество, выкатывает в прод, мониторит.',
+ 'specialization','IRC','{"R":40,"I":95,"A":25,"S":20,"E":40,"C":65}','sign',
+ '{employee,freelance}','{remote,team}','high'),
+('Нутрициолог-консультант','nutrition-consultant',
+ 'Помогает людям выстроить питание под цели и здоровье.',
+ 'Проводит онлайн-консультации, составляет планы питания, ведёт клиентов, пишет полезный контент.',
+ 'specialization','ISA','{"R":20,"I":75,"A":30,"S":80,"E":50,"C":40}','human',
+ '{freelance,business,hybrid}','{remote,with_people,solo}','medium'),
+
+-- A — Artistic
+('UX/UI-дизайнер цифровых продуктов','ux-ui-designer',
+ 'Проектирует интерфейсы приложений и сайтов.',
+ 'Изучает задачу, рисует прототипы в Figma, тестирует на пользователях, отдаёт макеты в разработку.',
+ 'specialization','AIE','{"R":20,"I":60,"A":90,"S":40,"E":50,"C":40}','art',
+ '{employee,freelance}','{remote,solo,team}','high'),
+('Видеомонтажёр для блогеров и брендов','video-editor',
+ 'Монтирует ролики для YouTube, рекламы, соцсетей.',
+ 'Принимает исходники, монтирует, добавляет графику и звук, согласует правки с заказчиком.',
+ 'specialization','AER','{"R":40,"I":30,"A":90,"S":30,"E":50,"C":40}','art',
+ '{freelance,business}','{remote,solo}','high'),
+('Кондитер на заказ (домашняя кондитерская)','pastry-chef-home',
+ 'Готовит торты и десерты на заказ из дома.',
+ 'Принимает заказы, закупает продукты, печёт и украшает торт, организует доставку, ведёт Instagram.',
+ 'specialization','ARE','{"R":70,"I":20,"A":80,"S":40,"E":60,"C":40}','art',
+ '{business,freelance}','{hands,solo}','medium'),
+
+-- S — Social
+('Онлайн-репетитор и методист по математике','online-math-tutor',
+ 'Готовит школьников к экзаменам онлайн и разрабатывает программы.',
+ 'Составляет план уроков, проводит онлайн-занятия, проверяет работы, привлекает учеников через соцсети.',
+ 'specialization','SAI','{"R":10,"I":60,"A":40,"S":90,"E":55,"C":35}','human',
+ '{employee,freelance,business,hybrid}','{remote,with_people,solo}','high'),
+('Карьерный консультант','career-coach',
+ 'Помогает людям с выбором профессии и поиском работы.',
+ 'Проводит сессии, разбирает резюме, готовит к собеседованиям, ведёт клиентов до оффера.',
+ 'specialization','SEA','{"R":10,"I":50,"A":40,"S":90,"E":70,"C":40}','human',
+ '{freelance,business,hybrid}','{remote,with_people}','medium'),
+('Медсестра/патронажная сиделка','caregiver-nurse',
+ 'Уход за пожилыми и больными на дому или в клинике.',
+ 'Помогает с гигиеной и лекарствами, измеряет показатели, поддерживает, координируется с врачом.',
+ 'specialization','SRC','{"R":50,"I":40,"A":10,"S":90,"E":20,"C":50}','human',
+ '{employee,freelance}','{hands,with_people}','high'),
+
+-- E — Enterprising
+('Таргетолог для локального бизнеса','targeting-smm',
+ 'Настраивает рекламу в соцсетях для малого бизнеса.',
+ 'Анализирует клиента, запускает рекламные кампании, считает заявки и цену, оптимизирует, отчитывается.',
+ 'specialization','ECI','{"R":10,"I":60,"A":40,"S":40,"E":85,"C":55}','sign',
+ '{freelance,business}','{remote,solo}','high'),
+('Менеджер по продажам B2B (IT-решения)','b2b-sales-it',
+ 'Продаёт сложные IT-продукты компаниям.',
+ 'Ищет клиентов, проводит встречи и демо, ведёт переговоры, закрывает сделки, ведёт CRM.',
+ 'specialization','ECS','{"R":10,"I":40,"A":30,"S":60,"E":90,"C":50}','human',
+ '{employee}','{office,with_people,remote}','high'),
+('Основатель нишевого интернет-магазина','niche-ecommerce-owner',
+ 'Продаёт товары узкой ниши через свой магазин.',
+ 'Ищет товар и поставщиков, ведёт сайт и рекламу, обрабатывает заказы, работает с отзывами.',
+ 'specialization','ECR','{"R":30,"I":40,"A":40,"S":40,"E":90,"C":60}','sign',
+ '{business}','{remote,solo}','medium'),
+
+-- C — Conventional
+('Бухгалтер на аутсорсе для малого бизнеса','outsourced-accountant',
+ 'Ведёт учёт и отчётность для нескольких ИП/ООО.',
+ 'Сводит документы, считает налоги, сдаёт отчётность, консультирует клиентов по учёту.',
+ 'specialization','CIE','{"R":10,"I":60,"A":10,"S":40,"E":40,"C":95}','sign',
+ '{freelance,business,employee}','{remote,solo}','high'),
+('Специалист по кадровому делопроизводству','hr-records-specialist',
+ 'Ведёт кадровые документы и учёт персонала.',
+ 'Оформляет приёмы/увольнения, ведёт табели, следит за соответствием трудовому праву.',
+ 'specialization','CSE','{"R":10,"I":40,"A":10,"S":60,"E":40,"C":90}','sign',
+ '{employee,freelance}','{office,remote}','medium'),
+('Виртуальный ассистент (онлайн-помощник)','virtual-assistant',
+ 'Берёт на себя рутину предпринимателей: почта, календарь, документы.',
+ 'Разбирает почту, планирует встречи, оформляет документы, ищет информацию, ведёт несколько клиентов.',
+ 'specialization','CSE','{"R":10,"I":40,"A":20,"S":60,"E":50,"C":85}','sign',
+ '{freelance,business}','{remote,solo}','high'),
+
+-- Дополнительные востребованные/современные роли
+('Специалист по кибербезопасности','cybersecurity-specialist',
+ 'Защищает системы компаний от атак и утечек.',
+ 'Мониторит угрозы, проводит аудит, настраивает защиту, расследует инциденты.',
+ 'specialization','IRC','{"R":40,"I":90,"A":20,"S":20,"E":40,"C":75}','sign',
+ '{employee,freelance}','{remote,team}','high'),
+('AI-консультant для малого бизнеса','ai-consultant',
+ 'Внедряет AI-инструменты в процессы небольших компаний.',
+ 'Аудит процессов, подбор инструментов, настройка ботов/автоматизаций, обучение команды клиента.',
+ 'specialization','IEC','{"R":20,"I":85,"A":40,"S":50,"E":70,"C":55}','sign',
+ '{freelance,business}','{remote,with_people}','high'),
+('Копирайтер/контент-маркетолог','content-copywriter',
+ 'Пишет статьи, рассылки и тексты для брендов.',
+ 'Изучает тему, пишет тексты, согласует правки, планирует контент-план, анализирует охваты.',
+ 'specialization','AIE','{"R":10,"I":60,"A":85,"S":40,"E":50,"C":50}','art',
+ '{freelance,business,employee}','{remote,solo}','high'),
+('Фотограф (свадьбы и семейная съёмка)','photographer-events',
+ 'Снимает события и семейные фотосессии на заказ.',
+ 'Согласует съёмку, проводит фотосессию, обрабатывает фото, ведёт портфолио и продвижение.',
+ 'specialization','ARE','{"R":60,"I":30,"A":85,"S":50,"E":60,"C":30}','art',
+ '{freelance,business}','{hands,with_people,solo}','medium'),
+('Мастер маникюра (свой кабинет)','nail-master',
+ 'Делает маникюр и уход за ногтями в своём кабинете.',
+ 'Принимает клиентов по записи, выполняет процедуры, ведёт расписание и соцсети, закупает материалы.',
+ 'specialization','RAS','{"R":75,"I":20,"A":70,"S":60,"E":50,"C":40}','art',
+ '{business,freelance}','{hands,with_people,solo}','medium'),
+('Агроном/специалист по тепличному хозяйству','agronomist',
+ 'Выращивает и контролирует урожай в теплицах/хозяйстве.',
+ 'Следит за растениями и микроклиматом, планирует подкормки, борется с болезнями, ведёт записи.',
+ 'specialization','IRC','{"R":80,"I":70,"A":10,"S":20,"E":30,"C":60}','nature',
+ '{employee,business}','{hands,team}','medium')
+on conflict (slug) do nothing;
+
+-- Компактное наполнение income_profiles (ориентир, RUB/мес).
+-- Формат строки: slug, mode, pay_model, low, median, high
+insert into income_profiles
+  (occupation_id, employment_mode, pay_model, currency, income_low, income_median, income_high, period, source)
+select o.id, d.mode, d.pay, 'RUB', d.low, d.med, d.high, 'month', 'ориентир MVP — сверить с hh/Avito'
+from occupations o
+join (values
+  ('furniture-restorer','business','per_project',40000,90000,200000),
+  ('qa-engineer-food','employee','salary',55000,80000,120000),
+  ('smarthome-electrician','freelance','per_project',70000,130000,300000),
+  ('product-data-analyst','employee','salary',90000,160000,280000),
+  ('ml-engineer','employee','salary',150000,280000,500000),
+  ('nutrition-consultant','business','per_project',50000,120000,300000),
+  ('ux-ui-designer','freelance','per_project',80000,160000,350000),
+  ('video-editor','freelance','per_project',50000,120000,300000),
+  ('pastry-chef-home','business','per_project',40000,90000,200000),
+  ('online-math-tutor','freelance','hourly',60000,120000,250000),
+  ('career-coach','business','per_project',50000,130000,350000),
+  ('caregiver-nurse','employee','salary',45000,70000,110000),
+  ('targeting-smm','freelance','per_project',60000,130000,300000),
+  ('b2b-sales-it','employee','mixed',90000,180000,400000),
+  ('niche-ecommerce-owner','business','product',50000,150000,600000),
+  ('outsourced-accountant','business','subscription',60000,120000,250000),
+  ('hr-records-specialist','employee','salary',50000,80000,130000),
+  ('virtual-assistant','freelance','hourly',40000,90000,180000),
+  ('cybersecurity-specialist','employee','salary',120000,220000,450000),
+  ('ai-consultant','business','per_project',80000,200000,500000),
+  ('content-copywriter','freelance','per_project',40000,100000,250000),
+  ('photographer-events','business','per_project',40000,100000,250000),
+  ('nail-master','business','per_project',50000,90000,180000),
+  ('agronomist','employee','salary',50000,85000,150000)
+) as d(slug, mode, pay, low, med, high) on o.slug = d.slug;
