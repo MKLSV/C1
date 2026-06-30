@@ -160,6 +160,7 @@ create table sessions (
     id          uuid primary key default gen_random_uuid(),
     user_id     uuid references users(id) on delete set null,
     stage       text not null default 'rapport',
+    mode        text not null default 'deep' check (mode in ('quick','deep')),  -- быстрый/глубокий
     profile     jsonb not null default '{}'::jsonb,      -- user_profile из сценария
     confidence  numeric not null default 0,
     status      text not null default 'active' check (status in ('active','completed','abandoned')),
